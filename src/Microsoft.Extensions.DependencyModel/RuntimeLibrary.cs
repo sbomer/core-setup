@@ -18,8 +18,32 @@ namespace Microsoft.Extensions.DependencyModel
             IReadOnlyList<RuntimeAssetGroup> nativeLibraryGroups,
             IEnumerable<ResourceAssembly> resourceAssemblies,
             IEnumerable<Dependency> dependencies,
-            bool serviceable)
-            : base(type, name, version, hash, dependencies, serviceable)
+            bool serviceable) : this(
+                type,
+                name,
+                version,
+                hash,
+                runtimeAssemblyGroups,
+                nativeLibraryGroups,
+                resourceAssemblies,
+                dependencies,
+                serviceable,
+                path: null)
+        {
+        }
+
+        public RuntimeLibrary(
+            string type,
+            string name,
+            string version,
+            string hash,
+            IReadOnlyList<RuntimeAssetGroup> runtimeAssemblyGroups,
+            IReadOnlyList<RuntimeAssetGroup> nativeLibraryGroups,
+            IEnumerable<ResourceAssembly> resourceAssemblies,
+            IEnumerable<Dependency> dependencies,
+            bool serviceable,
+            string path)
+            : base(type, name, version, hash, dependencies, serviceable, path)
         {
             if (runtimeAssemblyGroups == null)
             {
