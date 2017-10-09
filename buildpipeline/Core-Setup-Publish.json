@@ -232,7 +232,7 @@
         "solution": "$(PB_SourcesDirectory)\\publish\\publish.proj",
         "platform": "$(PB_TargetArchitecture)",
         "configuration": "$(BuildConfiguration)",
-        "msbuildArguments": "/p:Configuration=$(BuildConfiguration) $(PB_CommonMSBuildArgs) /p:SignType=$(PB_SignType) /p:NuGetFeedUrl=$(NUGET_FEED_URL) /p:NuGetSymbolsFeedUrl=$(NUGET_SYMBOLS_FEED_URL) /p:NuGetApiKey=$(NUGET_API_KEY) /p:AzureAccountName=$(PB_AzureAccountName) /p:AzureAccessToken=$(PB_AzureAccessToken) /p:ChecksumAzureAccountName=$(PB_ChecksumAzureAccountName) /p:ChecksumAzureAccessToken=$(PB_ChecksumAzureAccessToken) /p:GitHubUser=$(PB_GitHubUser) /p:GitHubEmail=$(PB_GitHubEmail) /p:GitHubAuthToken=$(GITHUB_PASSWORD) /p:VersionsRepoOwner=$(PB_VersionsRepoOwner) /p:VersionsRepo=$(PB_VersionsRepo) /p:VersionsRepoPath=build-info/dotnet/$(PB_RepoName)/$(SourceBranch) /p:Finalize=true /p:DotNetToolDir=$(DotNetToolDir) /p:EmbedIndexToolDir=$(EmbedIndexToolDir) /flp:v=detailed;LogFile=$(PB_SourcesDirectory)\\publish.log",
+        "msbuildArguments": "/p:Configuration=$(BuildConfiguration) $(PB_CommonMSBuildArgs) /p:SignType=$(PB_SignType) /p:NuGetFeedUrl=$(NUGET_FEED_URL) /p:NuGetSymbolsFeedUrl=$(NUGET_SYMBOLS_FEED_URL) /p:NuGetApiKey=$(NUGET_API_KEY) /p:AzureAccountName=$(PB_AzureAccountName) /p:AzureAccessToken=$(PB_AzureAccessToken) /p:ChecksumAzureAccountName=$(PB_ChecksumAzureAccountName) /p:ChecksumAzureAccessToken=$(PB_ChecksumAzureAccessToken) /p:GitHubUser=$(PB_GitHubUser) /p:GitHubEmail=$(PB_GitHubEmail) /p:GitHubAuthToken=$(GITHUB_PASSWORD) /p:VSTSUser=$(PB_VsoAccountName) /p:VSTSAccessToken=$(PB_VsoPassword) /p:VersionsRepoOwner=$(PB_VersionsRepoOwner) /p:VersionsRepo=$(PB_VersionsRepo) /p:VersionsRepoPath=build-info/dotnet/$(PB_RepoName)/$(SourceBranch) /p:Finalize=true /p:DotNetToolDir=$(DotNetToolDir) /p:EmbedIndexToolDir=$(EmbedIndexToolDir) /flp:v=detailed;LogFile=$(PB_SourcesDirectory)\\publish.log",
         "clean": "false",
         "maximumCpuCount": "false",
         "restoreNugetPackages": "false",
@@ -353,7 +353,7 @@
       "allowOverride": true
     },
     "NUGET_FEED_URL": {
-      "value": "https:%2F%2Fdotnet.myget.org/F/dotnet-core/api/v2/package"
+      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core/nuget/v2"
     },
     "NUGET_API_KEY": {
       "value": null,
@@ -367,7 +367,7 @@
       "value": "win7-x64"
     },
     "NUGET_SYMBOLS_FEED_URL": {
-      "value": "https:%2F%2Fdotnet.myget.org/F/dotnet-core/symbols/api/v2/package"
+      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core/nuget/v2"
     },
     "PB_SourcesDirectory": {
       "value": "$(Build.SourcesDirectory)\\core-setup"
