@@ -353,7 +353,7 @@
       "allowOverride": true
     },
     "NUGET_FEED_URL": {
-      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core/nuget/v2"
+      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core-internal-tooling/nuget/v2"
     },
     "NUGET_API_KEY": {
       "value": null,
@@ -367,7 +367,7 @@
       "value": "win7-x64"
     },
     "NUGET_SYMBOLS_FEED_URL": {
-      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core/nuget/v2"
+      "value": "https:%2F%2Fdevdiv.pkgs.visualstudio.com/_packaging/dotnet-core-internal-tooling/nuget/v2"
     },
     "PB_SourcesDirectory": {
       "value": "$(Build.SourcesDirectory)\\core-setup"
