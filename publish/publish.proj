@@ -227,7 +227,7 @@
     <Exec Condition=" '$(PushingToVSTS)' == 'true' "
           Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
     <Exec Condition=" '$(PushingToVSTS)' == 'true' "
-          Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)">
+          Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
 
     <PropertyGroup>
       <NuGetPushCommand>$(DotnetToolCommand) nuget $(NuGetPushArgs) push --source $(NuGetFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
