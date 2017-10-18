@@ -21,10 +21,14 @@
     disables versions repo update if no auth token is defined. Otherwise, not specifying an auth
     token would cause an error.
   -->
+  <PropertyGroup>
+    <UpdateVersionsRepoDependsOn>ExcludeSymbolsPackagesFromPublishedVersions;</UpdateVersionsRepoDependsOn>
+    <UpdateVersionsRepoDependsOn Condition=" '$(DryRun)' != 'true' ">$(UpdateVersionsRepoDependsOn)UpdatePublishedVersions;</UpdateVersionsRepoDependsOn>
+  </PropertyGroup>
+
   <Target Name="UpdateVersionsRepo"
           Condition="'$(GitHubAuthToken)' != ''"
-          DependsOnTargets="ExcludeSymbolsPackagesFromPublishedVersions;
-                            UpdatePublishedVersions" />
+          DependsOnTargets="$(UpdateVersionsRepoDependsOn)" />
 
   <Target Name="ExcludeSymbolsPackagesFromPublishedVersions">
     <ItemGroup>
@@ -73,8 +77,9 @@
     <UploadToAzure AccountName="$(AzureAccountName)"
                    AccountKey="$(AzureAccessToken)"
                    ContainerName="$(ContainerName)"
-                   Items="@(ItemsToPublish)"
-                   Overwrite="false" />
+                   Items="@(ItemsToPublish)" 
+                   Overwrite="false"
+                   Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="UploadChecksumsToAzure"
@@ -93,8 +98,9 @@
     <UploadToAzure AccountName="$(ChecksumAzureAccountName)"
                    AccountKey="$(ChecksumAzureAccessToken)"
                    ContainerName="$(ChecksumContainerName)"
-                   Items="@(ItemsToPublish)"
-                   Overwrite="false" />
+                   Items="@(ItemsToPublish)" 
+                   Overwrite="false"
+                   Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="PublishDebFilesToDebianRepo"
@@ -103,7 +109,7 @@
                      '$(DebRepoUser)' != '' AND
                      '$(DebRepoPass)' != '' AND
                      '$(DebRepoServer)' != ''">
-    <Exec Condition="'@(DebInstallerFile)' != ''"
+    <Exec Condition="'@(DebInstallerFile)' != '' And '$(DryRun)' != 'true' "
           Command="$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
   </Target>
 
@@ -131,7 +137,7 @@
                    CommitHash="$(LatestCommit)"
                    FinalizeContainer="Runtime/$(SharedFrameworkNugetVersion)"
                    ForcePublish="true"
-                   Condition="'@(_MissingBlobNames)' == ''" />
+                   Condition=" '$(DryRun)' != 'true' And '@(_MissingBlobNames)' == ''" />
     <Error Condition="'$(ChecksumAzureAccessToken)' == ''" Text="Missing required property 'ChecksumAzureAccessToken'" />
     <Error Condition="'$(ChecksumAzureAccountName)' == ''" Text="Missing required property 'ChecksumAzureAccountName'" />
     <Error Condition="'$(ChecksumContainerName)' == ''" Text="Missing required property 'ChecksumContainerName'" />
@@ -148,7 +154,8 @@
                    ProductVersion="$(ProductVersion)"
                    CommitHash="$(LatestCommit)"
                    FinalizeContainer="Runtime/$(SharedFrameworkNugetVersion)"
-                   ForcePublish="true" />
+                   ForcePublish="true"
+                   Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="PublishCoreHostPackages"
@@ -234,11 +241,16 @@
       <NuGetPushSymbolsCommand>$(DotnetToolCommand) nuget push --source $(NuGetSymbolsFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
 
-    <ExecWithRetriesForNuGetPush Command="$(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)"
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
+             Text="would run with retries: $(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' "
+                                 Command="$(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
 
-    <Message Condition="'@(_DownloadedSymbolsPackages)' != ''" Text="Pushing CoreHost symbols packages to $(NuGetSymbolsFeedUrl)" />
-    <ExecWithRetriesForNuGetPush Condition="'@(_DownloadedSymbolsPackages)' != ''"
+    <Message Importance="High" Condition="'@(_DownloadedSymbolsPackages)' != ''" Text="Pushing CoreHost symbols packages to $(NuGetSymbolsFeedUrl)" />
+    <Message Condition=" '$(DryRun)' == 'true' And '@(_DownloadedSymbolsPackages)' != ''"
+             Text="would run with retries: $(NuGetPushSymbolsCommand) %(_DownloadedSymbolsPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' And '@(_DownloadedSymbolsPackages)' != ''"
                                  Command="$(NuGetPushSymbolsCommand) %(_DownloadedSymbolsPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
   </Target>
@@ -294,7 +306,10 @@
     <PropertyGroup>
       <NuGetPushCommand>$(DotnetToolCommand) nuget push --source $(CliNuGetFeedUrl) --api-key $(CliNuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
     </PropertyGroup>
-    <ExecWithRetriesForNuGetPush Command="$(NuGetPushCommand) %(DebToolPackages.Identity)"
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
+             Text="would run with retries: $(NuGetPushCommand) %(DebToolPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' "
+                                 Command="$(NuGetPushCommand) %(DebToolPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
   </Target>
 
