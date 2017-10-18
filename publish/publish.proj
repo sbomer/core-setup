@@ -107,8 +107,12 @@
                      '$(DebRepoUser)' != '' AND
                      '$(DebRepoPass)' != '' AND
                      '$(DebRepoServer)' != ''">
+    <PropertyGroup>
+      <_PublishDebFilesCommand>$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)</_PublishDebFilesCommand>
+    </PropertyGroup>
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '@(DebInstallerFile)' != ''" Text="would run: $(_PublishDebFilesCommand)" />
     <Exec Condition="'@(DebInstallerFile)' != '' And '$(DryRun)' != 'true' "
-          Command="$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
+          Command="$(_PublishDebFilesCommand)" />
   </Target>
 
   <Target Name="FinalizeBuildInAzure"
