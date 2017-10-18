@@ -111,8 +111,11 @@
       <_MissingBlobNames Include="@(PublishRid->'sharedfx_%(Identity)_$(ConfigurationGroup)_version_badge.svg')" 
                          Exclude="@(_FoundBlobNames)" />
     </ItemGroup>
+    <Message Importance="High"
+             Text="Missing publish output from all legs of the build. Missing blobs are '@(_MissingBlobNames)'"
+             Condition="'@(_MissingBlobNames)' != '' And '$(DryRun)' == 'true' " />
     <Error Text="Missing publish output from all legs of the build. Missing blobs are '@(_MissingBlobNames)'"
-           Condition="'@(_MissingBlobNames)' != ''" />
+           Condition="'@(_MissingBlobNames)' != '' And '$(DryRun)' != 'true' " />
   </Target>
 
   <Import Project="..\dir.targets" />
