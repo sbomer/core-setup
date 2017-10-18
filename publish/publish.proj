@@ -11,8 +11,8 @@
           DependsOnTargets="PublishToAzure;PublishDebFilesToDebianRepo;PublishDebToolPackageToFeed;PublishFinalOutput" />
 
   <PropertyGroup>
-    <PublishFinalOutputDependsOn>PublishCoreHostPackagesToFeed;FinalizeBuildInAzure;</PublishFinalOutputDependsOn>
-    <PublishFinalOutputDependsOn Condition=" '$(DryRun)' != 'true' ">$(PublishFinalOutputDependsOn)UpdatePublishedVersions</PublishFinalOutputDependsOn>
+    <PublishFinalOutputDependsOn>PublishCoreHostPackagesToFeed;FinalizeBuildInAzure</PublishFinalOutputDependsOn>
+    <PublishFinalOutputDependsOn Condition=" '$(DryRun)' != 'true' ">$(PublishFinalOutputDependsOn);UpdatePublishedVersions</PublishFinalOutputDependsOn>
   </PropertyGroup>
   <Target Name="PublishFinalOutput"
           Condition="'$(Finalize)' == 'true'"
