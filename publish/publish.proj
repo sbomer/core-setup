@@ -93,8 +93,11 @@
 
   <Target Name="PublishDebFilesToDebianRepo"
           DependsOnTargets="GenerateDebRepoFiles">
-      <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '@(DebInstallerFile)' != ''" Text="would run: $(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
-      <Exec Condition=" '$(DryRun)' != 'true' And '@(DebInstallerFile)' != ''" Command="$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
+    <PropertyGroup>
+      <_PublishDebFilesCommand>$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)</_PublishDebFilesCommand>
+    </PropertyGroup>
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '@(DebInstallerFile)' != ''" Text="would run: $(_PublishDebFilesCommand)" />
+    <Exec Condition=" '$(DryRun)' != 'true' And '@(DebInstallerFile)' != ''" Command="$(_PublishDebFilesCommand)" />
   </Target>
 
   <Target Name="FinalizeBuildInAzure"
