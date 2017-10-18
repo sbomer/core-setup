@@ -9,10 +9,14 @@
 
   <Target Name="Build"
           DependsOnTargets="PublishToAzure;PublishDebFilesToDebianRepo;PublishDebToolPackageToFeed;PublishFinalOutput" />
-  
+
+  <PropertyGroup>
+    <PublishFinalOutputDependsOn>PublishCoreHostPackagesToFeed;FinalizeBuildInAzure;</PublishFinalOutputDependsOn>
+    <PublishFinalOutputDependsOn Condition=" '$(DryRun)' != 'true' ">$(PublishFinalOutputDependsOn)UpdatePublishedVersions</PublishFinalOutputDependsOn>
+  </PropertyGroup>
   <Target Name="PublishFinalOutput"
           Condition="'$(Finalize)' == 'true'"
-          DependsOnTargets="PublishCoreHostPackagesToFeed;FinalizeBuildInAzure;UpdatePublishedVersions" />
+          DependsOnTargets="$(PublishFinalOutputDependsOn)" />
           
   <Target Name="ExcludeSymbolsPackagesFromPublishedVersions" BeforeTargets="UpdatePublishedVersions" >
     <ItemGroup>
@@ -62,7 +66,8 @@
                    AccountKey="$(AzureAccessToken)"
                    ContainerName="$(ContainerName)"
                    Items="@(ItemsToPublish)" 
-                   Overwrite="false" />
+                   Overwrite="false"
+                   Condition=" '$(DryRun)' != 'true' "/>
   </Target>
   
   <Target Name="UploadChecksumsToAzure"
@@ -82,12 +87,14 @@
                    AccountKey="$(ChecksumAzureAccessToken)"
                    ContainerName="$(ChecksumContainerName)"
                    Items="@(ItemsToPublish)" 
-                   Overwrite="false" />
+                   Overwrite="false"
+                   Condition=" '$(DryRun)' != 'true' "/>
   </Target>
 
   <Target Name="PublishDebFilesToDebianRepo"
           DependsOnTargets="GenerateDebRepoFiles">
-      <Exec Condition="'@(DebInstallerFile)' != ''" Command="$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
+      <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '@(DebInstallerFile)' != ''" Text="would run: $(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
+      <Exec Condition=" '$(DryRun)' != 'true' And '@(DebInstallerFile)' != ''" Command="$(ProjectDir)tools-local/scripts/publish/repoapi_client.sh $(DebRepoUser) $(DebRepoPass) $(DebRepoId) $(DebRepoServer) -addpkg %(DebInstallerFile.UploadJsonFilename)" />
   </Target>
 
   <Target Name="FinalizeBuildInAzure"
@@ -114,7 +121,7 @@
                    CommitHash="$(LatestCommit)"
                    FinalizeContainer="Runtime/$(SharedFrameworkNugetVersion)"
                    ForcePublish="true"
-                   Condition="'@(_MissingBlobNames)' == ''" />
+                   Condition=" '$(DryRun)' != 'true' And '@(_MissingBlobNames)' == ''" />
     <Error Condition="'$(ChecksumAzureAccessToken)' == ''" Text="Missing required property 'ChecksumAzureAccessToken'" />
     <Error Condition="'$(ChecksumAzureAccountName)' == ''" Text="Missing required property 'ChecksumAzureAccountName'" />
     <Error Condition="'$(ChecksumContainerName)' == ''" Text="Missing required property 'ChecksumContainerName'" />
@@ -131,7 +138,8 @@
                    ProductVersion="$(ProductVersion)"
                    CommitHash="$(LatestCommit)"
                    FinalizeContainer="Runtime/$(SharedFrameworkNugetVersion)"
-                   ForcePublish="true" />
+                   ForcePublish="true"
+                   Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="PublishCoreHostPackagesToFeed"
@@ -224,9 +232,13 @@
       <NuGetSourceName>VSTSPackageSource</NuGetSourceName>
       <NuGetSymbolsSourceName>VSTSSymbolSource</NuGetSymbolsSourceName>
     </PropertyGroup>
-    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '$(PushingToVSTS)' == 'true' "
+             Text="would run: $(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
+    <Exec Condition=" '$(DryRun)' != 'true' And '$(PushingToVSTS)' == 'true' "
           Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
-    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '$(PushingToVSTS)' == 'true' "
+             Text="would run: $(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
+    <Exec Condition=" '$(DryRun)' != 'true' And '$(PushingToVSTS)' == 'true' "
           Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
 
     <PropertyGroup>
@@ -238,11 +250,16 @@
       <NuGetPushSymbolsCommand>$(ExternalNuGetExecutable) push -source $(NuGetSymbolsFeedUrl) -apikey $(NuGetApiKey) -timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
 
-    <ExecWithRetriesForNuGetPush Command="$(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)"
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
+             Text="would run with retries: $(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' "
+                                 Command="$(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
 
-    <Message Condition="'@(_DownloadedSymbolsPackages)' != ''" Text="Pushing CoreHost symbols packages to $(NuGetSymbolsFeedUrl)" />
-    <ExecWithRetriesForNuGetPush Condition="'@(_DownloadedSymbolsPackages)' != ''"
+    <Message Importance="High" Condition="'@(_DownloadedSymbolsPackages)' != ''" Text="Pushing CoreHost symbols packages to $(NuGetSymbolsFeedUrl)" />
+    <Message Condition=" '$(DryRun)' == 'true' And '@(_DownloadedSymbolsPackages)' != ''"
+             Text="would run with retries: $(NuGetPushSymbolsCommand) %(_DownloadedSymbolsPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' And '@(_DownloadedSymbolsPackages)' != ''"
                                  Command="$(NuGetPushSymbolsCommand) %(_DownloadedSymbolsPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
   </Target>
@@ -257,7 +274,10 @@
     <PropertyGroup>
       <NuGetPushCommand>$(DotnetToolCommand) nuget push --source $(CliNuGetFeedUrl) --api-key $(CliNuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
     </PropertyGroup>
-    <ExecWithRetriesForNuGetPush Command="$(NuGetPushCommand) %(DebToolPackages.Identity)"
+    <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
+             Text="would run with retries: $(NuGetPushCommand) %(DebToolPackages.Identity)" />
+    <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' "
+                                 Command="$(NuGetPushCommand) %(DebToolPackages.Identity)"
                                  IgnoredErrorMessagesWithConditional="@(IgnorableErrorMessages)" />
   </Target>
 
