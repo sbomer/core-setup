@@ -120,7 +120,7 @@
   <Target Name="AddFeedCredentials">
     <PropertyGroup>
       <PushingToVSTS Condition=" '$(PushingToVSTS)' == '' And $(NuGetFeedUrl.Contains('devdiv.pkgs.visualstudio.com'))">true</PushingToVSTS>
-      <ExternalNuGetExecutable Condition=" '$(PushingToVSTS)' == 'true' ">$(AGENT_WORKFOLDER)..\externals\nuget\nuget.exe</ExternalNuGetExecutabl>
+      <ExternalNuGetExecutable Condition=" '$(PushingToVSTS)' == 'true' ">$(AGENT_WORKFOLDER)\..\externals\nuget\nuget.exe</ExternalNuGetExecutabl>
     </PropertyGroup>
     <Error Condition=" '$(PushingToVSTS)' == 'true' And !Exists('$(ExternalNuGetExecutable)') " Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
 
