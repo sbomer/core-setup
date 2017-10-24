@@ -130,13 +130,10 @@
       <NuGetSymbolsSourceName>VSTSSymbolSource</NuGetSymbolsSourceName>
     </PropertyGroup>
 
-    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '$(PushingToVSTS)' == 'true' "
-             Text="would run: $(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
-    <Exec Condition=" '$(DryRun)' != 'true' And '$(PushingToVSTS)' == 'true' "
+    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
           Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
-    <Message Importance="High" Condition=" '$(DryRun)' == 'true' And '$(PushingToVSTS)' == 'true' "
-             Text="would run: $(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
-    <Exec Condition=" '$(DryRun)' != 'true' And '$(PushingToVSTS)' == 'true' "
+
+    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
           Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
 
   </Target>
