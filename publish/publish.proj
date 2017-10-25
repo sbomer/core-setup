@@ -43,7 +43,7 @@
           DependsOnTargets="GatherPublishToAzureBinaries;GatherPublishToAzureInstallers;GatherPublishToAzureChecksums">
     <MSBuild Targets="%(Project.PublishTarget)"
              Projects="%(Project.Identity)"
-             Properties="%(Project.AdditionalProperties)"
+             Properties="%(Project.AdditionalProperties);DryRun=$(DryRun)"
              BuildInParallel="true" />
   </Target>
 
