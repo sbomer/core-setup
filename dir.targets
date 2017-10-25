@@ -117,24 +117,25 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="AddFeedCredentials">
-    <PropertyGroup>
-      <PushingToVSTS Condition=" '$(PushingToVSTS)' == '' And $(NuGetFeedUrl.Contains('devdiv.pkgs.visualstudio.com'))">true</PushingToVSTS>
-      <ExternalNuGetExecutable Condition=" '$(PushingToVSTS)' == 'true' ">$(AGENT_WORKFOLDER)\..\externals\nuget\nuget.exe</ExternalNuGetExecutable>
-    </PropertyGroup>
-    <Error Condition=" '$(PushingToVSTS)' == 'true' And !Exists('$(ExternalNuGetExecutable)') " Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
-
+  <Target Name="AddFeedCredentials"
+          Condition=" '$(PushingToVSTS)' == 'true' Or '$(RestoringFromVSTS)' == 'true' ">
+    <Error Condition="!Exists('$(ExternalNuGetExecutable)') " Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
+    <Error Condition="'$(VSTSUser)' == ''" Text="No VSTS user specified" />
+    <Error Condition="'$(VSTSAccessToken)' == ''" Text="No VSTS access token specified" />
     <!-- For VSTS, need to add a named source with an access token before pushing. -->
-    <PropertyGroup Condition=" '$(PushingToVSTS)' == 'true' ">
-      <NuGetSourceName>VSTSPackageSource</NuGetSourceName>
-      <NuGetSymbolsSourceName>VSTSSymbolSource</NuGetSymbolsSourceName>
-    </PropertyGroup>
-
-    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
-          Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSourceName) -source $(NuGetFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
-
-    <Exec Condition=" '$(PushingToVSTS)' == 'true' "
-          Command="$(ExternalNuGetExecutable) sources add -name $(NuGetSymbolsSourceName) -source $(NuGetSymbolsFeedUrl) -username $(VSTSUser) -password $(VSTSAccessToken)" />
+    <ItemGroup>
+      <FeedsWithCredentials Condition="'$(RestoringFromVSTS)' != ''" Include="$(VSTSRestoreFeedUrl)">
+        <NuGetSourceName>VSTSRestoreSource</NuGetSourceName>
+      </FeedsWithCredentials>
+      <FeedsWithCredentials Condition="'$(PushingToVSTS)' != ''" Include="$(NuGetFeedUrl)">
+        <NuGetSourceName>VSTSPushSource</NuGetSourceName>
+      </FeedsWithCredentials>
+      <FeedsWithCredentials Condition="'$(PushingToVSTS)' != ''" Include="$(NuGetSymbolsFeedUrl)">
+        <NuGetSourceName>VSTSPushSymbolsSource</NuGetSourceName>
+      </FeedsWithCredentials>
+    </ItemGroup>
+    
+    <Exec Command="$(ExternalNuGetExecutable) sources add -name %(NuGetSourceName) -source @(FeedsWithCredentials) -username $(VSTSUser) -password $(VSTSAccessToken)" />
 
   </Target>
 

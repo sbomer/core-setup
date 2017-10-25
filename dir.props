@@ -49,7 +49,13 @@
       https://www.myget.org/F/nugetbuild/api/v3/index.json;
       https://api.nuget.org/v3/index.json;
       https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json;
-      https://devdiv.pkgs.visualstudio.com/_packaging/dotnet-core-internal-tooling/nuget/v3/index.json;
+    </RestoreSources>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RestoringFromVSTS)' == 'true' ">
+    <VSTSRestoreFeedUrl>https://devdiv.pkgs.visualstudio.com/_packaging/dotnet-core-internal-tooling/nuget/v3/index.json</VSTSRestoreFeedUrl>
+    <RestoreSources>
+      $(RestoreSources)
+      $(VSTSRestoreFeedUrl);
     </RestoreSources>
   </PropertyGroup>
 
