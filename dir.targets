@@ -119,6 +119,9 @@
 
   <Target Name="AddFeedCredentials"
           Condition=" '$(PushingToVSTS)' == 'true' Or '$(RestoringFromVSTS)' == 'true' ">
+    <PropertyGroup>
+      <ExternalNuGetExecutable Condition=" '$(PushingToVSTS)' == 'true' ">$(AGENT_WORKFOLDER)\..\externals\nuget\nuget.exe</ExternalNuGetExecutable>
+    </PropertyGroup>
     <Error Condition="!Exists('$(ExternalNuGetExecutable)') " Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
     <Error Condition="'$(VSTSUser)' == ''" Text="No VSTS user specified" />
     <Error Condition="'$(VSTSAccessToken)' == ''" Text="No VSTS access token specified" />
