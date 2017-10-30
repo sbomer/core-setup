@@ -43,7 +43,7 @@
           DependsOnTargets="GatherPublishToAzureBinaries;GatherPublishToAzureInstallers;GatherPublishToAzureChecksums">
     <MSBuild Targets="%(Project.PublishTarget)"
              Projects="%(Project.Identity)"
-             Properties="%(Project.AdditionalProperties);DryRun=$(DryRun)"
+             Properties="%(Project.AdditionalProperties)"
              BuildInParallel="true" />
   </Target>
 
@@ -278,8 +278,9 @@
                     AccountKey="$(TransportFeedAccessToken)"
                     ItemsToPush="@(ItemsToPush)"
                     PublishFlatContainer="$(PublishFlatContainer)"
-                    Overwrite="$(OverwriteOnPublish)"
-                    IndexDirectory="$(ObjDir)"/>
+                    Overwrite="$(OverwriteOnPublish)" 
+                    IndexDirectory="$(ObjDir)"
+                    Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="PublishSymbolsToAzureBlobFeed">
@@ -297,8 +298,9 @@
                     AccountKey="$(TransportFeedAccessToken)"
                     ItemsToPush="@(ItemsToPush)"
                     PublishFlatContainer="$(PublishFlatContainer)"
-                    Overwrite="$(OverwriteOnPublish)"
-                    IndexDirectory="$(ObjDir)"/>
+                    Overwrite="$(OverwriteOnPublish)" 
+                    IndexDirectory="$(ObjDir)"
+                    Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
   <Target Name="PublishDebToolPackageToFeed"
