@@ -62,7 +62,7 @@
 
   <Target Name="UploadToAzure"
           DependsOnTargets="EnsureUniqueItemsToUpload"
-          Condition="'$(ItemsToPublish)' != ''">
+          Condition="'$(ItemsToPublish)' != '' And '$(UWPBuild)' != 'true' ">
     <Error Condition="'$(AzureAccessToken)' == ''" Text="Missing required property 'AzureAccessToken'" />
     <Error Condition="'$(AzureAccountName)' == ''" Text="Missing required property 'AzureAccountName'" />
     <Error Condition="'$(ContainerName)' == ''" Text="Missing required property 'ContainerName'" />
