@@ -83,7 +83,7 @@
   </Target>
 
   <Target Name="UploadChecksumsToAzure"
-          Condition="'$(ItemsToPublish)' != ''">
+          Condition="'$(ItemsToPublish)' != '' And '$(UWPBuild)' != 'true' ">
     <Error Condition="'$(ChecksumAzureAccessToken)' == ''" Text="Missing required property 'ChecksumAzureAccessToken'" />
     <Error Condition="'$(ChecksumAzureAccountName)' == ''" Text="Missing required property 'ChecksumAzureAccountName'" />
     <Error Condition="'$(ChecksumContainerName)' == ''" Text="Missing required property 'ChecksumContainerName'" />
