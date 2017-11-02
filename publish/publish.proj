@@ -277,7 +277,7 @@
                     AccountKey="$(TransportFeedAccessToken)"
                     ItemsToPush="@(ItemsToPush)"
                     Overwrite="$(OverwriteOnPublish)"
-                    IndexDirectory="$(ObjDir)"/>
+                    IndexDirectory="$(ObjDir)"
                     Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
@@ -295,7 +295,7 @@
                     AccountKey="$(TransportFeedAccessToken)"
                     ItemsToPush="@(ItemsToPush)"
                     Overwrite="$(OverwriteOnPublish)"
-                    IndexDirectory="$(ObjDir)"/>
+                    IndexDirectory="$(ObjDir)"
                     Condition=" '$(DryRun)' != 'true' " />
   </Target>
 
