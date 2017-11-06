@@ -87,7 +87,7 @@
       },
       "inputs": {
         "filename": "$(PB_SourcesDirectory)\\build.cmd",
-        "arguments": "-- $(PB_CommonMSBuildArgs) /t:BuildTraversalBuildDependencies /flp:v=diag",
+        "arguments": "-- $(PB_CommonMSBuildArgs) /t:BuildTraversalBuildDependencies /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /flp:v=diag",
         "workingFolder": "$(PB_SourcesDirectory)",
         "failOnStandardError": "false"
       }
@@ -105,7 +105,7 @@
       },
       "inputs": {
         "filename": "$(PB_SourcesDirectory)\\build.cmd",
-        "arguments": "-src-builds -- $(PB_CommonMSBuildArgs) /p:BuildAppx=false",
+        "arguments": "-src-builds -- $(PB_CommonMSBuildArgs) /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /p:BuildAppx=false",
         "workingFolder": "$(PB_SourcesDirectory)",
         "failOnStandardError": "false"
       }
@@ -480,7 +480,7 @@
         "msbuildLocation": "",
         "platform": "$(PB_TargetArchitecture)",
         "configuration": "$(BuildConfiguration)",
-        "msbuildArguments": "$(PB_CommonMSBuildArgs) /p:AzureAccountName=$(PB_AzureAccountName) /p:ContainerName=$(PB_ContainerName) /p:AzureAccessToken=$(PB_AzureAccessToken) /p:PublishRidAgnosticPackages=$(PB_PublishRidAgnosticPackages) /p:BuildFullPlatformManifest=$(PB_BuildFullPlatformManifest) /p:ChecksumAzureAccountName=$(PB_ChecksumAzureAccountName) /p:ChecksumContainerName=$(PB_ChecksumContainerName) /p:ChecksumAzureAccessToken=$(PB_ChecksumAzureAccessToken) /p:DryRun=$(PB_DryRun) /p:UWPBuild=$(PB_UWPBuild) /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /flp:v=detailed;LogFile=$(PB_SourcesDirectory)\\publish.log",
+        "msbuildArguments": "$(PB_CommonMSBuildArgs) /p:AzureAccountName=$(PB_AzureAccountName) /p:ContainerName=$(PB_ContainerName) /p:AzureAccessToken=$(PB_AzureAccessToken) /p:PublishRidAgnosticPackages=$(PB_PublishRidAgnosticPackages) /p:BuildFullPlatformManifest=$(PB_BuildFullPlatformManifest) /p:ChecksumAzureAccountName=$(PB_ChecksumAzureAccountName) /p:ChecksumContainerName=$(PB_ChecksumContainerName) /p:ChecksumAzureAccessToken=$(PB_ChecksumAzureAccessToken) /p:DryRun=$(PB_DryRun) /p:UWPBuild=$(PB_UWPBuild) /flp:v=detailed;LogFile=$(PB_SourcesDirectory)\\publish.log",
         "clean": "false",
         "maximumCpuCount": "false",
         "restoreNugetPackages": "false",
