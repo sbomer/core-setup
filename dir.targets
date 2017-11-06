@@ -122,7 +122,8 @@
     <PropertyGroup>
       <ExternalNuGetExecutable Condition=" '$(PushingToVSTS)' == 'true' ">$(AGENT_WORKFOLDER)\..\externals\nuget\nuget.exe</ExternalNuGetExecutable>
     </PropertyGroup>
-    <Error Condition="!Exists('$(ExternalNuGetExecutable)') " Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
+    <Error Condition=" '$(PushingToVSTS)' == 'true' And !Exists('$(ExternalNuGetExecutable)') "
+           Text="External nuget executable not found at $(ExternalNuGetExecutable)" />
     <Error Condition="'$(VSTSUser)' == ''" Text="No VSTS user specified" />
     <Error Condition="'$(VSTSAccessToken)' == ''" Text="No VSTS access token specified" />
     <!-- For VSTS, need to add a named source with an access token before pushing. -->
