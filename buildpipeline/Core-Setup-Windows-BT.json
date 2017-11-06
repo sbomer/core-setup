@@ -87,7 +87,7 @@
       },
       "inputs": {
         "filename": "$(PB_SourcesDirectory)\\build.cmd",
-        "arguments": "-- $(PB_CommonMSBuildArgs) /t:BuildTraversalBuildDependencies /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /flp:v=diag",
+        "arguments": "-- $(PB_CommonMSBuildArgs) /t:BuildTraversalBuildDependencies /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /p:VSTSUser=$(PB_VsoAccountName) /p:VSTSAccessToken=$(PB_VsoPassword) /flp:v=diag",
         "workingFolder": "$(PB_SourcesDirectory)",
         "failOnStandardError": "false"
       }
@@ -105,7 +105,7 @@
       },
       "inputs": {
         "filename": "$(PB_SourcesDirectory)\\build.cmd",
-        "arguments": "-src-builds -- $(PB_CommonMSBuildArgs) /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /p:BuildAppx=false",
+        "arguments": "-src-builds -- $(PB_CommonMSBuildArgs) /p:RestoringFromVSTS=$(PB_RestoringFromVSTS) /p:VSTSUser=$(PB_VsoAccountName) /p:VSTSAccessToken=$(PB_VsoPassword) /p:BuildAppx=false",
         "workingFolder": "$(PB_SourcesDirectory)",
         "failOnStandardError": "false"
       }
