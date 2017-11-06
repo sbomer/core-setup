@@ -30,7 +30,7 @@
       <RelativeBlobPath>$(BinariesRelativePath)</RelativeBlobPath>
     </RuntimePackageFile>
     <UWPArtifactsToUpload Include="$(MicrosoftNetCoreRuntimeAppxOutputPath)" Condition="Exists('$(MicrosoftNetCoreRuntimeAppxOutputPath)')" >
-      <RelativeBlobPath>$(BinariesRelativePath)</RelativeBlobPath>
+      <RelativeBlobPath>$(BinariesRelativePath)/$(OutputRid)</RelativeBlobPath>
     </UWPArtifactsToUpload>
     <RidAgnosticPackageFile Include="$(PackageOutputPath)**/*.nupkg" Exclude="@(RuntimePackageFile)" >
       <RelativeBlobPath>$(BinariesRelativePath)</RelativeBlobPath>
