@@ -127,15 +127,19 @@
     <Error Condition="'$(VSTSUser)' == ''" Text="No VSTS user specified" />
     <Error Condition="'$(VSTSAccessToken)' == ''" Text="No VSTS access token specified" />
     <!-- For VSTS, need to add a named source with an access token before pushing. -->
+    <PropertyGroup Condition="'$(PushingToVSTS)' == 'true'">
+      <NuGetPushSourceName>VSTSPushSource</NuGetPushSourceName>
+      <NuGetPushSymbolsSourceName>VSTSPushSymbolsSource</NuGetPushSymbolsSourceName>
+    </PropertyGroup>
     <ItemGroup>
-      <FeedsWithCredentials Condition="'$(RestoringFromVSTS)' != ''" Include="$(VSTSRestoreFeedUrl)">
+      <FeedsWithCredentials Condition="'$(RestoringFromVSTS)' == 'true'" Include="$(VSTSRestoreFeedUrl)">
         <NuGetSourceName>VSTSRestoreSource</NuGetSourceName>
       </FeedsWithCredentials>
-      <FeedsWithCredentials Condition="'$(PushingToVSTS)' != ''" Include="$(NuGetFeedUrl)">
-        <NuGetSourceName>VSTSPushSource</NuGetSourceName>
+      <FeedsWithCredentials Condition="'$(PushingToVSTS)' == 'true'" Include="$(NuGetFeedUrl)">
+        <NuGetSourceName>$(NuGetPushSourceName)</NuGetSourceName>
       </FeedsWithCredentials>
-      <FeedsWithCredentials Condition="'$(PushingToVSTS)' != ''" Include="$(NuGetSymbolsFeedUrl)">
-        <NuGetSourceName>VSTSPushSymbolsSource</NuGetSourceName>
+      <FeedsWithCredentials Condition="'$(PushingToVSTS)' == 'true'" Include="$(NuGetSymbolsFeedUrl)">
+        <NuGetSourceName>$(NuGetPushSymbolsSourceName)</NuGetSourceName>
       </FeedsWithCredentials>
     </ItemGroup>
     
