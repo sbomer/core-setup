@@ -7,11 +7,20 @@
     <ItemGroup>
       <PublishFile Include="@(CompressedFile)" />
       <PublishFile Include="@(RuntimePackageFile)" />
-      <PublishFile Include="@(UWPArtifactsToUpload)" />
       <PublishFile Condition="'$(PublishRidAgnosticPackages)' == 'true'" Include="@(RidAgnosticPackageFile)" />
       <Project Include="publish.proj">
         <PublishTarget>UploadToAzure</PublishTarget>
-        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(PublishFile);$(OutputVersionBadge)</AdditionalProperties>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(PublishFile);$(OutputVersionBadge);RelativeBlobPath=$(BinariesRelativePath)</AdditionalProperties>
+      </Project>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GatherPublishToAzureUWPArtifacts">
+    <ItemGroup>
+      <UWPPublishFile Include="@(UWPArtifactsToUpload)" />
+      <Project Include="publish.proj">
+        <PublishTarget>UploadToAzure</PublishTarget>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(UWPPublishFile);$(OutputVersionBadge);RelativeBlobPath=$(OutputRid)/$(BinariesRelativePath)</AdditionalProperties>
       </Project>
     </ItemGroup>
   </Target>
@@ -20,19 +29,17 @@
     <ItemGroup>
       <Project Include="publish.proj">
         <PublishTarget>UploadToAzure</PublishTarget>
-        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(InstallerFile)</AdditionalProperties>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(InstallerFile);RelativeBlobPath=$(InstallersRelativePath)</AdditionalProperties>
       </Project>
     </ItemGroup>
   </Target>
 
   <Target Name="GatherPublishToAzureChecksums" DependsOnTargets="CreateChecksums" >
     <ItemGroup>
-      <ChecksumItems Include="$(AssetOutputPath)**/*$(ChecksumExtension)">
-        <RelativeBlobPath>$(ChecksumsRelatvePath)</RelativeBlobPath>
-      </ChecksumItems>
+      <ChecksumItems Include="$(AssetOutputPath)**/*$(ChecksumExtension)" />
       <Project Include="publish.proj">
         <PublishTarget>UploadChecksumsToAzure</PublishTarget>
-        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(ChecksumItems)</AdditionalProperties>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(ChecksumItems);RelativeBlobPath=$(ChecksumsRelativePath)</AdditionalProperties>
       </Project>
     </ItemGroup>
   </Target>

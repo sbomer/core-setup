@@ -70,7 +70,7 @@
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
       <ItemsToPublish>
-        <RelativeBlobPath>%(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
+        <RelativeBlobPath>$(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
       </ItemsToPublish>
     </ItemGroup>
     <Message Importance="High"
@@ -92,7 +92,7 @@
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
       <ItemsToPublish>
-        <RelativeBlobPath>%(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
+        <RelativeBlobPath>$(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
       </ItemsToPublish>
     </ItemGroup>
     <UploadToAzure AccountName="$(ChecksumAzureAccountName)"
