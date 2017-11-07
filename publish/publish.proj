@@ -66,12 +66,11 @@
     <Error Condition="'$(AzureAccessToken)' == ''" Text="Missing required property 'AzureAccessToken'" />
     <Error Condition="'$(AzureAccountName)' == ''" Text="Missing required property 'AzureAccountName'" />
     <Error Condition="'$(ContainerName)' == ''" Text="Missing required property 'ContainerName'" />
-    <Error Condition="'$(RelativeBlobPath)' == ''" Text="Missing required property 'RelativeBlobPath'" />
 
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
       <ItemsToPublish>
-        <RelativeBlobPath>$(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
+        <RelativeBlobPath>%(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
       </ItemsToPublish>
     </ItemGroup>
     <Message Importance="High"
@@ -89,12 +88,11 @@
     <Error Condition="'$(ChecksumAzureAccessToken)' == ''" Text="Missing required property 'ChecksumAzureAccessToken'" />
     <Error Condition="'$(ChecksumAzureAccountName)' == ''" Text="Missing required property 'ChecksumAzureAccountName'" />
     <Error Condition="'$(ChecksumContainerName)' == ''" Text="Missing required property 'ChecksumContainerName'" />
-    <Error Condition="'$(RelativeBlobPath)' == ''" Text="Missing required property 'RelativeBlobPath'" />
 
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
       <ItemsToPublish>
-        <RelativeBlobPath>$(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
+        <RelativeBlobPath>%(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
       </ItemsToPublish>
     </ItemGroup>
     <UploadToAzure AccountName="$(ChecksumAzureAccountName)"
