@@ -40,7 +40,7 @@
 
   <Target Name="PublishToAzure"
           Condition="'$(Finalize)' != 'true'"
-          DependsOnTargets="GatherPublishToAzureBinaries;GatherPublishToAzureInstallers;GatherPublishToAzureChecksums">
+          DependsOnTargets="GatherPublishToAzureBinaries;GatherPublishToAzureUWPArtifacts;GatherPublishToAzureInstallers;GatherPublishToAzureChecksums">
     <MSBuild Targets="%(Project.PublishTarget)"
              Projects="%(Project.Identity)"
              Properties="%(Project.AdditionalProperties)"
