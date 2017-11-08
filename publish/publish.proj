@@ -251,6 +251,9 @@
       <NuGetPushSymbolsCommand>$(ExternalNuGetExecutable) push -source $(NuGetSymbolsFeedUrl) -timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
 
+    <!-- get nuget version -->
+    <Exec Command="$(ExternalNUGetExecutable)" />
+
     <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
              Text="would run with retries: $(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)" />
     <ExecWithRetriesForNuGetPush Condition=" '$(DryRun)' != 'true' "
