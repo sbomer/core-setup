@@ -138,7 +138,7 @@
       <FeedsWithCredentials Condition="'$(PushingToVSTS)' == 'true'" Include="$(NuGetFeedUrl)">
         <NuGetSourceName>$(NuGetPushSourceName)</NuGetSourceName>
       </FeedsWithCredentials>
-      <FeedsWithCredentials Condition="'$(PushingToVSTS)' == 'true'" Include="$(NuGetSymbolsFeedUrl)">
+      <FeedsWithCredentials Condition="'$(PushingToVSTS)' == 'true' And '$(NuGetFeedUrl)' != '$(NuGetSymbolsFeedUrl)'" Include="$(NuGetSymbolsFeedUrl)">
         <NuGetSourceName>$(NuGetPushSymbolsSourceName)</NuGetSourceName>
       </FeedsWithCredentials>
     </ItemGroup>
