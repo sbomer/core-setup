@@ -247,8 +247,8 @@
       <NuGetPushSymbolsCommand>$(DotnetToolCommand) nuget push --source $(NuGetSymbolsFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(PushingToVSTS)' == 'true' ">
-      <NuGetPushCommand>$(ExternalNuGetExecutable) push -source $(NuGetFeedUrl) -timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
-      <NuGetPushSymbolsCommand>$(ExternalNuGetExecutable) push -source $(NuGetSymbolsFeedUrl) -timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
+      <NuGetPushCommand>$(ExternalNuGetExecutable) push -source $(NuGetFeedUrl) -apikey VSTS -timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
+      <NuGetPushSymbolsCommand>$(ExternalNuGetExecutable) push -source $(NuGetSymbolsFeedUrl) -apikey VSTS -timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
 
     <!-- get nuget version -->
