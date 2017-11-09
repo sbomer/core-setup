@@ -74,8 +74,6 @@
         <RelativeBlobPath>$(RelativeBlobPath)/%(Filename)%(Extension)</RelativeBlobPath>
       </ItemsToPublish>
     </ItemGroup>
-    <Message Importance="High"
-             Text="About to upload to azure: @(ItemsToPublish). RelativeBlobPath=%(RelativeBlobPath)" />
     <UploadToAzure AccountName="$(AzureAccountName)"
                    AccountKey="$(AzureAccessToken)"
                    ContainerName="$(ContainerName)"
