@@ -44,13 +44,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--
-        <PublishRid Include="win-x86" />
-    -->
+    <PublishRid Include="win-x86" />
     <PublishRid Include="win-x64" />
-    <!--
-        <PublishRid Include="win-arm" />
-    -->
+    <PublishRid Include="win-arm" />
     <PublishRid Include="win-arm64" />
   </ItemGroup>
 </Project>

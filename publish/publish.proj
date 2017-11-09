@@ -66,6 +66,7 @@
     <Error Condition="'$(AzureAccessToken)' == ''" Text="Missing required property 'AzureAccessToken'" />
     <Error Condition="'$(AzureAccountName)' == ''" Text="Missing required property 'AzureAccountName'" />
     <Error Condition="'$(ContainerName)' == ''" Text="Missing required property 'ContainerName'" />
+    <Error Condition="'$(RelativeBlobPath)' == ''" Text="Missing required property 'RelativeBlobPath'" />
 
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
@@ -243,12 +244,9 @@
     <Message Text="Pushing CoreHost packages to $(NuGetFeedUrl)" />
 
     <PropertyGroup>
-      <NuGetPushCommand>$(DotnetToolCommand) nuget $(NuGetPushArgs) push --source $(NuGetFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
+      <NuGetPushCommand>$(DotnetToolCommand) nuget push --source $(NuGetFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushCommand>
       <NuGetPushSymbolsCommand>$(DotnetToolCommand) nuget push --source $(NuGetSymbolsFeedUrl) --api-key $(NuGetApiKey) --timeout $(NuGetPushTimeoutSeconds)</NuGetPushSymbolsCommand>
     </PropertyGroup>
-
-    <!-- get nuget version -->
-    <Exec Command="$(ExternalNUGetExecutable)" />
 
     <Message Importance="High" Condition=" '$(DryRun)' == 'true' "
              Text="would run with retries: $(NuGetPushCommand) %(_DownloadedStandardPackages.Identity)" />
