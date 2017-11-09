@@ -87,6 +87,7 @@
     <Error Condition="'$(ChecksumAzureAccessToken)' == ''" Text="Missing required property 'ChecksumAzureAccessToken'" />
     <Error Condition="'$(ChecksumAzureAccountName)' == ''" Text="Missing required property 'ChecksumAzureAccountName'" />
     <Error Condition="'$(ChecksumContainerName)' == ''" Text="Missing required property 'ChecksumContainerName'" />
+    <Error Condition="'$(RelativeBlobPath)' == ''" Text="Missing required property 'RelativeBlobPath'" />
 
     <ItemGroup>
       <ItemsToPublish Include="$(ItemsToPublish)" />
