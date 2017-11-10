@@ -13,7 +13,7 @@
 
   <Import Project="$(ToolsDir)/Build.Common.targets" Condition="Exists('$(ToolsDir)Build.Common.targets') and '$(UseLiveBuildTools)' != 'true'" />
 
- <Target Name="BuildCustomTasks">
+  <Target Name="BuildCustomTasks">
       <MSBuild Projects="$(MSBuildThisFileDirectory)tools-local/tasks/core-setup.tasks.builds" />
 
     <PropertyGroup>

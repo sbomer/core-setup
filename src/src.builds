@@ -8,11 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Project Include="$(MSBuildThisFileDirectory)corehost/build.proj" />
+    <!--
+        <Project Include="$(MSBuildThisFileDirectory)corehost/build.proj" />
+    -->
     <Project Include="$(MSBuildThisFileDirectory)uwp/build.proj" Condition="'$(_BuildUwpDependencies)' == 'true'"/>
-    <Project Include="$(MSBuildThisFileDirectory)managed/dir.proj" />
+    <!--
+        <Project Include="$(MSBuildThisFileDirectory)managed/dir.proj" />
+    -->
     <Project Include="$(MSBuildThisFileDirectory)pkg/appx/**/*.builds" Condition="'$(_BuildUwpDependencies)' == 'true' and '$(BuildAppx)' != 'false'" />
-    <Project Include="$(MSBuildThisFileDirectory)pkg/**/src/*.builds" />
+    <!--
+        <Project Include="$(MSBuildThisFileDirectory)pkg/**/src/*.builds" />
+    -->
+    <Project Include="$(MSBuildThisFileDirectory)pkg/projects/Microsoft.NETCore.UniversalWindowsPlatform/src/Microsoft.NETCore.UniversalWindowsPlatform.builds" />
+    <Project Include="$(MSBuildThisFileDirectory)pkg/projects/Microsoft.Net.UWPCoreRuntimeSdk/src/Microsoft.Net.UWPCoreRuntimeSdk.builds" />
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.traversal.targets))\dir.traversal.targets" />
