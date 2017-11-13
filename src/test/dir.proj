@@ -5,10 +5,12 @@
 
   <PropertyGroup>
     <BuildTestTargets>
+      <!--
         DetermineTestOutputDirectory;
         RestoreTests;
         BuildTests;
         RunTests;
+        -->
     </BuildTestTargets>
   </PropertyGroup>
 
@@ -27,7 +29,18 @@
 
   <Target Name="RestoreTests">
     <ItemGroup>
-      <RestoreTest Include="$(TestDir)/**/*.csproj" />
+      <!-- <RestoreTest Include="$(TestDir)/**/*.csproj" /> -->
+      <RestoreTest Include="$(TestDir)/HostActivationTests/HostActivationTests.csproj" />
+      <RestoreTest Include="$(TestDir)/TestUtils/TestUtils.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/PortableTestApp/PortableTestApp.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/StandaloneApp/StandaloneApp.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/PortableApp/PortableApp.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/LightupLib/LightupLib.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/ResourceLookup/ResourceLookup.csproj" />
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/SharedFxLookupPortableApp/SharedFxLookupPortableApp.csproj" />
+      <!-- <RestoreTest Include="$(TestDir)/Assets/TestProjects/LightupClient/LightupClient.csproj" /> -->
+      <RestoreTest Include="$(TestDir)/Assets/TestProjects/StandaloneTestApp/StandaloneTestApp.csproj" />
+      <RestoreTest Include="$(TestDir)/Microsoft.Extensions.DependencyModel.Tests/Microsoft.Extensions.DependencyModel.Tests.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
