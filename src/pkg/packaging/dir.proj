@@ -166,7 +166,7 @@
   </PropertyGroup>
   <Target Name="GenerateInstallers" DependsOnTargets="$(InstallerDependsOn)" />
 
-  <Target Name="GenerateCombinedInstallers" DependsOnTargets="InitPackage;GenerateBundles" />
+  <Target Name="GenerateCombinedInstallers" />
 
   <Target Name="GenerateNugetPackages" DependsOnTargets="InitPackage" Condition="'$(UsePrebuiltPortableBinariesForInstallers)' == 'false'">
 
