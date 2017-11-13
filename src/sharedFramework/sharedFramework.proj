@@ -9,10 +9,12 @@
 
   <PropertyGroup>
     <BuildTargets>
+      <!--
       PublishSharedFrameworkAndSharedHost;
       GenerateRuntimeGraph;
       CopyHostArtifactsToSharedFramework;
       GenerateVersionFile;
+      -->
     </BuildTargets>
   </PropertyGroup>
 
