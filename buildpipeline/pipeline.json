@@ -30,20 +30,6 @@
           }
         },
         {
-          "Name": "Core-Setup-Windows-Arm-BT",
-          "Parameters": {
-            "PB_AdditionalBuildArguments": "/p:SkipTests=true /p:NativeToolSetDir=C:\\tools\\clr",
-            "PB_TargetArchitecture": "arm64",
-            "PB_PortableBuild": "true"
-          },
-          "ReportingParameters": {
-            "SubType": "PortableBuild",
-            "OperatingSystem": "Windows",
-            "Type": "build/product/",
-            "Platform": "arm64"
-          }
-        },
-        {
           "Name": "Core-Setup-Windows-BT",
           "Parameters": {
             "PB_TargetArchitecture": "x64",
