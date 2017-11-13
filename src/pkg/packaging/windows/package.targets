@@ -124,11 +124,11 @@
   </Target>
 
   <Target Name="ExtractEngineBundle" Condition="'$(OSGroup)' == 'Windows_NT' and '$(GenerateMSI)' == 'true'">
-      <Exec Command="$(InsigniaCmd) -ib $(CombinedInstallerFile) -o $(CombinedInstallerEngine)" />
+      <!-- <Exec Command="$(InsigniaCmd) -ib $(CombinedInstallerFile) -o $(CombinedInstallerEngine)" /> -->
   </Target>
 
   <Target Name="ReattachEngineToBundle" Condition="'$(OSGroup)' == 'Windows_NT' and '$(GenerateMSI)' == 'true'">
-      <Exec Command="$(InsigniaCmd) -ab $(CombinedInstallerEngine) $(CombinedInstallerFile) -o $(CombinedInstallerFile)" />
+      <!-- <Exec Command="$(InsigniaCmd) -ab $(CombinedInstallerEngine) $(CombinedInstallerFile) -o $(CombinedInstallerFile)" /> -->
   </Target>
 
 </Project>
