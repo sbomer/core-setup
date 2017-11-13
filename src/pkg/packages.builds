@@ -12,6 +12,11 @@
   <ItemGroup>
     <ProjectExclusions Include="$(ProjectsBasePath)*\Microsoft.NETCore.UniversalWindowsPlatform.builds" Condition="'$(_BuildUwpDependencies)' != 'true'" />
     <ProjectExclusions Include="$(ProjectsBasePath)*\Microsoft.Net.UWPCoreRuntimeSdk.builds" Condition="'$(_BuildUwpDependencies)' != 'true'" />
+    <ProjectExclusions Include="$(ProjectsBasePath)*\Microsoft.NETCore.App.builds" />
+    <ProjectExclusions Include="$(ProjectsBasePath)*\DotNetAppHost.builds" />
+    <ProjectExclusions Include="$(ProjectsBasePath)*\DotNetHost.builds" />
+    <ProjectExclusions Include="$(ProjectsBasePath)*\DotNetHostPolicy.builds" />
+    <ProjectExclusions Include="$(ProjectsBasePath)*\DotNetHostResolver.builds" />
     <Project Include="$(ProjectsBasePath)*\*.builds" Exclude="@(ProjectExclusions)">
       <AdditionalProperties>$(AdditionalProperties)</AdditionalProperties>
     </Project>
