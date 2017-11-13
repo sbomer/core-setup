@@ -6,8 +6,10 @@
   <PropertyGroup>
     <PackageTargets>
         GenerateVersionBadge;
+        <!--
         GenerateCompressedFiles;
         GenerateNugetPackages;
+        -->
         GenerateInstallers;
     </PackageTargets>
   </PropertyGroup>
@@ -97,7 +99,7 @@
                       />
   </Target>
 
-  <Target Name="GenerateCompressedFiles" DependsOnTargets="InitPackage;GenerateZip;GenerateTarBall" Condition="'$(UsePrebuiltPortableBinariesForInstallers)' == 'false'"/>
+  <Target Name="GenerateCompressedFiles" DependsOnTargets="InitPackage;GenerateZip" Condition="'$(UsePrebuiltPortableBinariesForInstallers)' == 'false'"/>
 
   <UsingTask TaskName="ZipFileCreateFromDirectory" AssemblyFile="$(BuildToolsTaskDir)Microsoft.DotNet.Build.Tasks.dll"/>
   <Target Name="GenerateZip"
@@ -155,12 +157,14 @@
   <PropertyGroup>
    <InstallerDependsOn>
      GenerateMsis;
+     <!--
      GeneratePkgs;
      GenerateDebs;
      GenerateRpms;
+     -->
    </InstallerDependsOn>
   </PropertyGroup>
-  <Target Name="GenerateInstallers" DependsOnTargets="InitPackage;$(InstallerDependsOn)" />
+  <Target Name="GenerateInstallers" DependsOnTargets="$(InstallerDependsOn)" />
 
   <Target Name="GenerateCombinedInstallers" DependsOnTargets="InitPackage;GenerateBundles" />
 
