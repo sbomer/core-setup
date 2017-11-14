@@ -10,7 +10,7 @@
       <PublishFile Condition="'$(PublishRidAgnosticPackages)' == 'true'" Include="@(RidAgnosticPackageFile)" />
       <Project Include="publish.proj">
         <PublishTarget>UploadToAzure</PublishTarget>
-        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(PublishFile);$(OutputVersionBadge);RelativeBlobPath=$(BinariesRelativePath)</AdditionalProperties>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(PublishFile);RelativeBlobPath=$(BinariesRelativePath)</AdditionalProperties>
       </Project>
     </ItemGroup>
   </Target>

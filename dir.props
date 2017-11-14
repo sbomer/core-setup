@@ -271,7 +271,6 @@
 
   <PropertyGroup>
     <DisableCrossgen>false</DisableCrossgen>
-    <OutputVersionBadge>$(BaseOutputRootPath)sharedfx_$(OutputRid)_$(ConfigurationGroup)_version_badge.svg</OutputVersionBadge>
   </PropertyGroup>
 
   <PropertyGroup>
