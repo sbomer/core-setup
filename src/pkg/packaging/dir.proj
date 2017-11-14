@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <PackageTargets>
-        GenerateVersionBadge;
         <!--
+        GenerateVersionBadge;
         GenerateCompressedFiles;
         GenerateNugetPackages;
         -->
