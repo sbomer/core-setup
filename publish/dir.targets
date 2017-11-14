@@ -20,7 +20,7 @@
       <UWPPublishFile Include="@(UWPArtifactsToUpload)" />
       <Project Include="publish.proj">
         <PublishTarget>UploadToAzure</PublishTarget>
-        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(UWPPublishFile);$(OutputVersionBadge);RelativeBlobPath=$(BinariesRelativePath)/$(OutputRid)</AdditionalProperties>
+        <AdditionalProperties>%(Project.AdditionalProperties);ItemsToPublish=@(UWPPublishFile);RelativeBlobPath=$(BinariesRelativePath)/$(OutputRid)</AdditionalProperties>
       </Project>
     </ItemGroup>
   </Target>
