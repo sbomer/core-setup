@@ -115,7 +115,7 @@
                       FilterBlobNames="Runtime/$(SharedFrameworkNugetVersion)/">
       <Output TaskParameter="BlobNames" ItemName="_BlobNames" />
     </ListAzureBlobs>
-    <Message Text="Azure blobs (_BlobNames): @(BlobNames)" Importance="High" />
+    <Message Text="Azure blobs (_BlobNames): @(_BlobNames)" Importance="High" />
     <ItemGroup>
       <_FoundBlobNames Include="%(_BlobNames.FileName)%(_BlobNames.Extension)" Condition="'%(_BlobNames.Extension)' == '.svg'" />
       <_MissingBlobNames Include="@(PublishRid->'sharedfx_%(Identity)_$(ConfigurationGroup)_version_badge.svg')"
